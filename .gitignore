@@ -1,0 +1,31 @@
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Runtime output: downloaded wallpapers and logs (third-party copyrighted images)
+wallpapers/
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.avif
+*.part
+manifest.json
+manifest.csv
+manifest.jsonl
+download.log
+
+# Analysis workspace / dependencies (never publish third-party code or CRX)
+analysis/
+node_modules/
+*.crx
+*.zip
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
