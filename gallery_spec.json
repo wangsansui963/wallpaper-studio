@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "name": "Infinity New Tab Pro wallpaper gallery protocol (statically decoded)",
+  "decoded_from": {
+    "distribution_zip": "infinity-new-tab-pro@latest.zip",
+    "crx_version": 3,
+    "crx_zip_offset": 1321,
+    "extension_version": "11.0.41",
+    "manifest_version": 3,
+    "crx_sha256": "5c14e2e3855ad39ff121f2a7e0b0bac72dea8be92b081023668125f028298777",
+    "inner_payload_sha256": "07d85f4b9b1a988c5956315482dfa471f17f3ebd22d6f45efc542ab466c22f0d"
+  },
+  "legal": {
+    "intended_use": "personal_local_only",
+    "constraints": [
+      "Only unauthenticated, read-only public endpoints are implemented.",
+      "Authenticated endpoints (like_wallpaper / collection_wallpaper / upload_wallpaper / *_library) are intentionally NOT implemented.",
+      "No bypass of authorization, signatures, DRM, paywalls or rate limits.",
+      "Wallpapers remain the property of their respective authors; do not redistribute or use commercially."
+    ]
+  },
+  "endpoints": {
+    "list": {
+      "url": "https://api.inftab.com/v2/get_wallpaper_list",
+      "method": "GET",
+      "fixed_params": {"client": "pc"},
+      "notes": "source='all' is INVALID here; omit source (or use '') for the full library."
+    },
+    "by_source": {
+      "url": "https://api.inftab.com/get-wallpaper",
+      "method": "GET",
+      "notes": "Takes {source}; 'all' is mapped to empty string by the extension."
+    },
+    "random": {
+      "url": "https://api.inftab.com/random-wallpaper",
+      "method": "GET",
+      "notes": "Returns data[0] with src.rawSrc, _id, source."
+    },
+    "bing_daily": {
+      "url": "https://api.inftab.com/v2/get_bing_wallpaper",
+      "method": "GET"
+    },
+    "next": {
+      "url": "https://api.inftab.com/v2/get_next_wallpaper",
+      "method": "GET",
+      "notes": "Takes {source, type='library', _id?}."
+    }
+  },
+  "sources": [
+    {"name": "All sources", "value": "all", "query_value": null},
+    {"name": "Infinity Landscape", "value": "InfinityLandscape", "query_value": "InfinityLandscape"},
+    {"name": "Infinity Comic", "value": "Infinity", "query_value": "Infinity"},
+    {"name": "Bing", "value": "bing", "query_value": "bing"},
+    {"name": "Unsplash", "value": "Unsplash", "query_value": "Unsplash"},
+    {"name": "Life Of Pix", "value": "Life Of Pix", "query_value": "Life Of Pix"},
+    {"name": "MMT", "value": "MMT", "query_value": "MMT"},
+    {"name": "Realistic Shots", "value": "Realistic Shots", "query_value": "Realistic Shots"},
+    {"name": "Jay Mantri", "value": "Jay Mantri", "query_value": "Jay Mantri"},
+    {"name": "Free Nature Stock", "value": "Free Nature Stock", "query_value": "Free Nature Stock"},
+    {"name": "Skitter Photo", "value": "Skitter Photo", "query_value": "Skitter Photo"},
+    {"name": "Startup Stock Photos", "value": "Startup Stock Photos", "query_value": "Startup Stock Photos"},
+    {"name": "Barn Images", "value": "Barn Images", "query_value": "Barn Images"},
+    {"name": "Picography", "value": "Picography", "query_value": "Picography"}
+  ],
+  "orders": {
+    "1": {"query_value": "like", "label": "most liked"},
+    "2": {"query_value": "_id", "label": "by id"}
+  },
+  "pagination": {
+    "param": "page",
+    "start": 0,
+    "page_size": 50,
+    "response": {
+      "items": "data.list",
+      "count": "data.count",
+      "total_pages": "data.totalPages",
+      "next_page": "data.nextPage"
+    }
+  },
+  "item_schema": {
+    "raw_url": "src.rawSrc",
+    "id": "_id",
+    "img_id": "imgId",
+    "source": "source",
+    "dimensions": "dimensions",
+    "like": "like",
+    "colors": "colors"
+  },
+  "image_transform": {
+    "description": "Extension convertURL(): derives display/thumbnail URLs from the raw CDN url using Qiniu imageView2.",
+    "raw": "{rawSrc}",
+    "display": "{rawSrc}?imageView2/2/w/{normalWidth}/{format}interlace/1",
+    "thumbnail": "{rawSrc}?imageView2/2/w/{smallWidth}/{format}interlace/1",
+    "smallWidth": "min(floor(203 * devicePixelRatio), 3840)",
+    "normalWidth": "min(floor(screen.width * devicePixelRatio), 3840)",
+    "format": "format/webp/ (empty on Safari)"
+  },
+  "daily": {
+    "infinity": {
+      "template": "https://wallpaper.infinitynewtab.com/InfinityWallpaper/{month}_{day}.jpg",
+      "rule": "month = getMonth()+1, day = getDate()"
+    },
+    "bing": {
+      "template": "https://img.infinitynewtab.com/bingWallpaper/bg.jpg?md5={md5}",
+      "rule": "md5 comes from stored chrome setting 'infinity-bing-wallpaper-md5'"
+    }
+  },
+  "default_image": "https://infinitypro-img.infinitynewtab.com/findaphoto/bigLink/default.png",
+  "runtime_verification": {
+    "date": "2026-11-14",
+    "requests": 6,
+    "list_all": {"count": 51632, "totalPages": 1033, "page_size": 50, "code": 0},
+    "source_Unsplash": {"count": 6915, "totalPages": 139},
+    "source_InfinityLandscape": {"count": 184, "totalPages": 4},
+    "source_all_literal": {"count": 0, "note": "invalid filter value"},
+    "raw_image_head": {"status": 200, "content_type": "image/jpeg", "content_length": 172636},
+    "sample_item": {
+      "src": {"rawSrc": "https://infinitypro-img.infinitynewtab.com/findaphoto/bigLink/15228.jpg"},
+      "_id": "57ca8fc2d54a684cdf14dcfe",
+      "imgId": "15228",
+      "dimensions": "2048px × 1143px",
+      "source": "Unsplash",
+      "like": 502
+    }
+  }
+}
